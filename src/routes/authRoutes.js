@@ -9,9 +9,6 @@ const generateToken = (userId) => {
     expiresIn: "1h",
   });
 };
-router.get("/register", async (req, res) => {
-  res.send("Register");
-});
 
 router.post("/register", async (req, res) => {
   try {
@@ -52,7 +49,7 @@ router.post("/register", async (req, res) => {
 
     const profileImage = `https://api.dicebear.com/5.x/avataaars/svg?seed=${username}`;
 
-    const user = new User({ email, username, password, profileImage: "" });
+    const user = new User({ email, username, password, profileImage });
 
     await user.save();
 
@@ -60,7 +57,11 @@ router.post("/register", async (req, res) => {
 
     res
       .status(201)
-      .json({ token, user: { id: user._id, username, email, profileImage } });
+      .json({
+        success: true,
+        token,
+        user: { id: user._id, username, email, profileImage },
+      });
   } catch (error) {
     console.log("Error in register route:", error);
     res.status(500).json({ message: "Internal server error" });
