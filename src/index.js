@@ -15,6 +15,9 @@ job.start();
 app.use(express.json());
 app.use(cors());
 
+app.get("/api", () => {
+  return res.send("Hello World");
+});
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 
